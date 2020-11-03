@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Receipt</title>
+	<title>Receipt|Jade Delight</title>
 	<style>
 		tr:nth-child(even) {
   			background-color: #dddddd;
@@ -9,16 +9,20 @@
 	</style>
 </head>
 <body>
+	
 	<h1 id = "h1"> </h1>
 	<hr/>
 	<div id = "time">
 	</div>
-	<div id = "order">
+	<div id = "out">
 	</div>
 	<div id = "total">
 	</div>
 
+	
+
 	<script language="javascript">
+
 		function MenuItem(name, cost)
 		{
 			this.name = name;
@@ -34,10 +38,11 @@
 		);
 
 		var x = location.search.substring(1);
-		var info = x.split("&");
-		document.getElementById("h1").innerHTML +="Thank you " + info[0].split("=")[1] + " "+ info[1].split("=")[1] + ", we are preparing your order";
+		var input = x.split("&");
 
-		var type = info[5].split("=")[1];
+		document.getElementById("h1").innerHTML +="Thank you " + input[0].split("=")[1] + " "+ input[1].split("=")[1] + ", we are preparing your order";
+
+		var type = input[5].split("=")[1];
 		var time = "";
 		if(type == "pickup"){
 			time = "<p><b>Estimate Pickup Time:&nbsp; </b>"+ Date(Date() + 15*60000) +"</p>";
@@ -46,7 +51,7 @@
 		}
 		document.getElementById("time").innerHTML += time;
 
-		var order = `<table>
+		var out = `<table>
 					<tr>
    						<th>Qty</th>
     					<th>Description</th>
@@ -54,31 +59,35 @@
     					<th>Amount($)</th>
   					</tr>`
 
-		for(var i = 0; i <= 8; ++i){
-			var qty = info[i].split("=")[1];
-			if(qty != 0){
-				description = menuItems[i].name;
-				eachCost = menuItems[i].cost.toFixed(2);
-				amount = info[i+1].split("=")[1]
-				order += "<tr><td>" +  qty + "</td>";
-    			order += "<td>" + description + "</td>";
-    			order += "<td>" + eachCost + "</td>";
-    			order += "<td>" + amount+ "</td></tr>";
+		for(var i = 6; i <= 14; i+=2){
+			var quant = input[i].split("=")[1];
+			if(quant != 0){
+				what = menuItems[i%6].name;
+				costPer = menuItems[i%6].cost.toFixed(2);
+				amount = input[i+1].split("=")[1]
+				out += "<tr><td>" +  quant + "</td>";
+    			out += "<td>" + what + "</td>";
+    			out += "<td>" + costPer + "</td>";
+    			out += "<td>" + amount+ "</td></tr>";
   					
 			}
 		}
-		order+= "</table>"
-		document.getElementById("order").innerHTML += order;
-		var total = info[18].split("=")[1];
-		var subtotal = info[16].split("=")[1];
-		var tax = info[17].split("=")[1];
+		out+= "</table>"
+		document.getElementById("out").innerHTML += out;
+		var total = input[18].split("=")[1];
+		var subtotal = input[16].split("=")[1];
+		var tax = input[17].split("=")[1];
 
-		var info_total = "<p> <b>Subtotal: &nbsp; </b> $" + subtotal + " </p>";
-		info_total += "<p> <b>Mass tax 6.25%: &nbsp;</b>$ " + tax + " </p>";
-		info_total += "<p> <b>Total: &nbsp;</b> $" + total + " </p>";
-		document.getElementById("total").innerHTML += info_total;
+		var output = "<p> <b>Subtotal: &nbsp; </b> $" + subtotal + " </p>";
+		output += "<p> <b>Mass tax 6.25%: &nbsp;</b>$ " + tax + " </p>";
+		output += "<p> <b>Total: &nbsp;</b> $" + total + " </p>";
+		document.getElementById("total").innerHTML += output;
 
 	</script>
+
+
+
+
 </body>
 </html>
 
