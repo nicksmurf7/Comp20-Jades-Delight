@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Jade Delight</title>
+    <title>Jade's Delight</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 
@@ -86,7 +86,7 @@
                 <th>Total Cost</th>
             </tr>
             <script language="javascript">
-                function itemCost(index) {
+                function getCost(index) {
                     cost = document.getElementsByName('cost');
                     quantity = document.getElementsByName('quan' + index);
                     totalCost = (quantity[0].value * menuItems[index].cost).toFixed(2);
@@ -101,7 +101,7 @@
                 function findsum() {
                     var sum = 0;
                     for (var i = 0; i < menuItems.length; ++i) {
-                        sum += itemCost(i);
+                        sum += getCost(i);
                     }
                     document.getElementById('subtotal').value = sum.toFixed(2);
                     document.getElementById('tax').value = (sum * .0625).toFixed(2);
